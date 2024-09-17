@@ -1,52 +1,39 @@
-// Get the profile picture input and image preview element
-const profilePicInput = document.getElementById('profilePic');
-const profilePreview = document.getElementById('profilePreview');
 
-// Display the uploaded profile picture as a preview
-profilePicInput.addEventListener('change', function() {
-    const file = this.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            profilePreview.src = e.target.result;
-            profilePreview.style.display = 'block';
+function userRegistration() {
+    console.log("click!!");
+
+    // Collect values from the form
+    let firstName = $('#firstName').val();
+    let lastName = $('#lastName').val();
+    let email = $('#email').val();
+    let password = $('#password').val();
+    let profilePic = $('#profilePic')[0].files[0]; // Get profile picture file
+
+    console.log(firstName, lastName, email, password);
+
+    // Create FormData to handle text and file data
+    let formData = new FormData();
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('profilePic', profilePic); // Append profile picture
+
+    // Create AJAX request
+    $.ajax({
+        url: "http://localhost:8080/api/v1/users",
+        method: "POST",
+        data: formData, // Send FormData object
+        processData: false, // Important: Do not process data as a string
+        contentType: false, // Important: Let the browser set content type including the boundary
+        success: function (response) {
+            console.log(response.data.token);
+            localStorage.setItem("token", response.data.token); // Store token in local storage
+            alert("User registered successfully!");
+        },
+        error: function (error) {
+            console.log(error);
+            alert("User registration failed.");
         }
-        reader.readAsDataURL(file);
-    }
-});
-
-// Handle form submission
-document.getElementById('userForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    // Collect form data
-    const formData = new FormData(this);
-
-    // Send form data to the backend using AJAX
-    const form = document.querySelector('form');
-    form.addEventListener('submit', function (e) {
-        e.preventDefault(); // Prevent form from submitting normally
-
-        const formData = new FormData(form); // Collect form data
-
-        fetch('http://localhost:8080/api/v1/users', {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'Accept': 'application/json',
-            }
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('User created successfully:', data);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
     });
-});
+}
