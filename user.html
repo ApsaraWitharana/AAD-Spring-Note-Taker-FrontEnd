@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/user.css">
+</head>
+<body>
+<div class="form-container">
+    <h2>User Registration</h2>
+    <form id="userForm" enctype="multipart/form-data">
+        <input type="text" id="firstName" name="firstName" placeholder="First Name">
+        <input type="text" id="lastName" name="lastName" placeholder="Last Name">
+        <input type="email" id="email" name="email" placeholder="Email">
+        <input type="password" id="password" name="password" placeholder="Password">
+        <input type="file" id="profilePic" name="profilePic">
+        <img id="profilePreview" style="display: none;" alt="Profile Preview" />
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+<script src="/js/jquery-3.7.1.min.js"></script>
+<script src="./js/user.js"></script>
+</body>
+</html>
