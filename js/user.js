@@ -27,13 +27,21 @@ function userRegistration() {
         processData: false, // Important: Do not process data as a string
         contentType: false, // Important: Let the browser set content type including the boundary
         success: function (response) {
-            console.log(response.data.token);
-            localStorage.setItem("token", response.data.token); // Store token in local storage
-            alert("User registered successfully!");
+            Swal.fire({
+                title: 'Success!',
+                text: 'User registered successfully!',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
         },
         error: function (error) {
             console.log(error);
-            alert("User registration failed.");
+            Swal.fire({
+                title: 'Error!',
+                text: 'User registration failed.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
         }
     });
 }
